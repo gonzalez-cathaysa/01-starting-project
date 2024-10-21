@@ -5,9 +5,9 @@
       <!-- Now I want dynamic values -->
       <img [src]="image().src" [alt]="image().alt" />
       <!-- <h2>Server Status</h2> -->
-       <h2>{{title()}}</h2>
+      <h2>{{ title() }}</h2>
     </header>
-
+    <ng-content></ng-content>
     <!-- Contains the actual Component-specific content -->
     <!-- <div>
       @if (currentStatus === 'online') {
