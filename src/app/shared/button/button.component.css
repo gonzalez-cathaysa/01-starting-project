@@ -1,4 +1,22 @@
-button {
+/* In the CSS file, I am looking for button elements, but we have no button elements 
+in the button component template file  */
+/* We can do is target the host element of our component, every Angular component has 
+a host element. Which is simply the element that is selected by the selector */
+/* For the control component the host element would be this app-control element*/
+/* For the button component, the host element is therefore the button with the
+ attribute appButton on it -> button[appButton]*/
+ /* In your styles, you can target that host element, which I do want to target
+here since I want to style that button, by using the special (colon):host CSS selector*/
+/* This special host selector is a CSS feature you should know when working with Angular
+because it does allow you to directly apply styles to the rendered host element*/
+/* I will replace all my button occurrences with host */
+
+/* The component host element is not considered a part of the component template but will
+be affected by the (scoped) component styles via :host */
+
+
+
+:host {
   display: inline-block;
   padding: 0.65rem 1.35rem;
   border-radius: 0.25rem;
@@ -10,9 +28,25 @@ button {
   border: none;
 }
 
-button:hover {
+/* button {
+  display: inline-block;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: #691ebe;
+  color: white;
+  border: none;
+} */
+
+:host:hover {
   background-color: #551b98;
 }
+
+/* button:hover {
+  background-color: #551b98;
+} */
 
 .icon {
   display: inline-block;
@@ -20,6 +54,10 @@ button:hover {
   transition: transform 0.2s ease-in-out;
 }
 
-button:hover .icon {
+:host:hover .icon {
   transform: translateX(4px);
 }
+
+/* button:hover .icon {
+  transform: translateX(4px);
+} */
