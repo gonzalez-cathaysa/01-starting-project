@@ -1,4 +1,8 @@
-#status {
+/* #status {
+  display: block;
+  width: 15rem;
+} */
+:host {
   display: block;
   width: 15rem;
 }
