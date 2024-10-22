@@ -1,12 +1,17 @@
+<!-- So here in the new ticket component html file, and add this control class here
+because you can add extra attributes like this, they often just might not have any effect, 
+but here it will have an effect, because by adding a class here, we're adding this class 
+which is wanted by the control component css file  -->
+
 <form action="">
   <!-- <p> -->
-  <app-control label="Title">
+  <app-control class="control" label="Title">
     <!-- <label for="">Title</label> -->
     <input name="title" id="title" />
   </app-control>
   <!-- </p> -->
   <!-- <p> -->
-  <app-control label="Request">
+  <app-control class="control" label="Request">
     <!-- <label for="">Request</label> -->
     <textarea name="request" id="request" rows="3"></textarea>
   </app-control>

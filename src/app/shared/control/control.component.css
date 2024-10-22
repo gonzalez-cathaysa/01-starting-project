@@ -1,3 +1,15 @@
+/* We can target colon host */
+/* Now it's broken here, because for this component we disabled view encapsulation, we set it to none */
+/* As a result, this component still has a host element, in the DOM is there, but this host CSS selector
+won't work, because these styles ot this component are indeed no longer scoped to this component. 
+Instead, they are applied as global styles to the entire page as if you would've put them into the styles.CSS
+And therefore there is no real connection between these styles and these CSS rules and the component to which
+you attach them. That's why this host selector doesn't target this component's host element, with view encapsulation
+set to none
+So for this specific use case, we can't use this host selector, but we can do something else. I'll go back to use
+.control and we could now go to the place where we use app control
+*/
+
 .control label {
   display: block;
   font-size: 0.8rem;
@@ -19,9 +31,10 @@ in the application*/
 to set it. Emulated means that Angular emulates the ShadowDown behavior */
 /* ShadowDown which end means styles that belong to a component or to an element should be scoped
 to that element. Angular emulates that browser feature for its own components.*/
-/* But here we need none, which simply disables that style scoping */
-/* The styles set up will again become global styles and therefore now they will affect the input and
+/* But here we need none, which simply disables that style scoping. The styles set up will 
+again become global styles and therefore now they will affect the input and
 text area that is eventually rendered into this component*/
+
 .control input,
 .control textarea {
   width: 100%;
@@ -32,3 +45,5 @@ text area that is eventually rendered into this component*/
   font-size: 0.9rem;
   color: #4f4b53;
 }
+
+/* So you can go tp the new ticket component html file and add the control class there */
