@@ -7,7 +7,23 @@
 
 <!-- If this condition is met -->
 <!-- You can add or remove classes dynamically with help of this syntax-->
-<div [class.status]="currentStatus === 'offline'">
+<!-- <div [class.status]="currentStatus === 'offline'"> -->
+<!-- This is actually an invalid property name. JS and TS, you can't add 
+properties that include dashes or white spaces like this to an object
+In such situations, you have to convert these properties to strings by 
+wrapping them with quotes-->
+
+<!-- And therefore now this will added as a class dynamically to this diff 
+if this condition is met-->
+<!-- It is not dynamic because is hard-coded -->
+<div
+  [class]="{
+    status: true,
+    'status-online': currentStatus === 'online',
+    'status-offline': currentStatus === 'offline',
+    'status-unknown': currentStatus === 'unknown',
+  }"
+>
   @if (currentStatus === 'online') {
   <p>Servers are online</p>
   <p>All systems are operational.</p>
