@@ -1,7 +1,9 @@
 import {
   Component,
+  ElementRef,
   HostBinding,
   HostListener,
+  inject,
   input,
   ViewEncapsulation,
 } from '@angular/core';
@@ -33,7 +35,7 @@ import {
   //be executed when thar event occurs
   host: {
     class: 'control',
-    '(click)': 'onClick()'
+    '(click)': 'onClick()',
   },
 })
 export class ControlComponent {
@@ -53,9 +55,37 @@ export class ControlComponent {
   //   console.log('Clicked');
   // }
 
+  // When we click on the host element, I wanna output some information about it,
+  // which obviously is not a real use case
+  // But here in this app I don't have a real use case because it is a feature
+  // you won't need that often
+
+  // So for this demo, let's say we wanna log some host element information
+  // whenever is clicked
+
+  // What you can do to achieve this, is you can inject a special value into your
+  // component, a value that will be provided by Angular
+  // And you can inject either with the constructor as your learned it for services
+  // or with help of that inject function about which you also learned
+
   label = input.required<string>();
+  // We have to pass the ElementRef class name, ElementRef is a class defined by Angular
+  // which defines a reference to some element
+  private el = inject(ElementRef);
 
   onClick() {
     console.log('Clicked');
+    console.log(this.el);
   }
+
+  //There is one other last host element-related feature
+  // you should know about though
+
+  // You might need programmatic access to the host element
+  // So you might need to interact with it from your TS code
+
+  //But by injecting it into a component like this,
+  //Angular will give yu access to the host element
+
+  
 }
