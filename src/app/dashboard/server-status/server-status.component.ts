@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationCancellationCode } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { NavigationCancellationCode } from '@angular/router';
   templateUrl: './server-status.component.html',
   styleUrl: './server-status.component.css',
 })
-export class ServerStatusComponent {
+export class ServerStatusComponent implements OnInit{
   // currentStatus = 'online';
   // Setting specific string values as types uses a TS feature
   // called 'Literal types'. The idea is to only allow specific
