@@ -6,7 +6,7 @@ import { NavigationCancellationCode } from '@angular/router';
   standalone: true,
   imports: [],
   templateUrl: './server-status.component.html',
-  styleUrl: './server-status.component.css'
+  styleUrl: './server-status.component.css',
 })
 export class ServerStatusComponent {
   // currentStatus = 'online';
@@ -14,19 +14,21 @@ export class ServerStatusComponent {
   // called 'Literal types'. The idea is to only allow specific
   // (string) values - instead of all strings
 
-  currentStatus: 'online'| 'offline' | 'unknown' ='offline';
+  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
 
-  constructor(){
-    setInterval(()=>{
+  constructor() {}
+
+  ngOnInit() {
+    setInterval(() => {
       const rnd = Math.random();
-      
-      if(rnd<0.5){
-        this.currentStatus='online';
-      } else if(rnd<0.9){
-        this.currentStatus='offline';
+
+      if (rnd < 0.5) {
+        this.currentStatus = 'online';
+      } else if (rnd < 0.9) {
+        this.currentStatus = 'offline';
       } else {
-        this.currentStatus ='unknown';
+        this.currentStatus = 'unknown';
       }
-    }, 5000)
+    }, 5000);
   }
 }
