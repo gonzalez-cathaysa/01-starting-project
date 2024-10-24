@@ -16,6 +16,19 @@ wrapping them with quotes-->
 <!-- And therefore now this will added as a class dynamically to this diff 
 if this condition is met-->
 <!-- It is not dynamic because is hard-coded -->
+<!-- <div
+  [class]="{
+    status: true,
+    'status-online': currentStatus === 'online',
+    'status-offline': currentStatus === 'offline',
+    'status-unknown': currentStatus === 'unknown',
+  }"
+  [style]="
+  {
+    'font-size':'64px'
+
+  }"
+> -->
 <div
   [class]="{
     status: true,
@@ -23,6 +36,7 @@ if this condition is met-->
     'status-offline': currentStatus === 'offline',
     'status-unknown': currentStatus === 'unknown',
   }"
+  [style.fontSize]="'64px'"
 >
   @if (currentStatus === 'online') {
   <p>Servers are online</p>
