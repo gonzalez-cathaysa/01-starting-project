@@ -10,7 +10,7 @@ to the component decorator, another configuration property, and this is the host
 
 Support tickets
 
-<form action="" (ngSubmit)="onSubmit(titleInput)">
+<form action="" (ngSubmit)="onSubmit(titleInput.value, textTicket.value)">
   <app-control label="Title">
     <!-- And one alternative way of getting hold of the entire element actually and therefore, 
  also if we want to of the value that has been entered here is to store that
@@ -19,14 +19,18 @@ Support tickets
     <!-- That variable is now available anywhere here in that template-->
     <!-- The object that is yielded by this syntax (#titleInput) is the standard browser input 
    DOM object-->
+    <!-- With Tile input it is the HTMLInputElement where I getting access to-->
     <input name="title" id="title" #titleInput />
   </app-control>
 
   <app-control label="Request">
-    <textarea name="request" id="request" rows="3"></textarea>
+    <!-- With the text input we are getting access to HTMLTextAreaElement -->
+    <textarea name="request" id="request" rows="3" #textTicket></textarea>
   </app-control>
 
   <p>
+    <!-- Now is that component instance btn: ButtonComponent as a variable that you get here 
+    not the underlying dom element -->
     <button appButton>
       Submit
       <span ngProjectAs="icon">→</span>

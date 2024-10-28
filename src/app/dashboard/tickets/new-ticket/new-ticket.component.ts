@@ -25,10 +25,12 @@ export class NewTicketComponent {
 
   // One piece of data we can extract from that object is the value property
 
-  onSubmit(titleElement: HTMLInputElement) {
+  onSubmit(title: string, ticketText: string) {
     // console.log(titleElement);
-    console.dir(titleElement);
-    const enteredTitle = titleElement.value;
-    console.log('Entered title' + enteredTitle);
+    // console.dir(titleElement);
+    // const enteredTitle = titleElement.value;
+    // console.log('Entered title' + enteredTitle)
+    console.log(title);
+    console.log(ticketText);
   }
 }
