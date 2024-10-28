@@ -9,7 +9,7 @@ import { interval } from 'rxjs';
   templateUrl: './server-status.component.html',
   styleUrl: './server-status.component.css',
 })
-export class ServerStatusComponent implements OnInit, OnDestroy{
+export class ServerStatusComponent implements OnInit{
   // currentStatus = 'online';
   // Setting specific string values as types uses a TS feature
   // called 'Literal types'. The idea is to only allow specific
