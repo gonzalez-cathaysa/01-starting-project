@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, resolveForwardRef, viewChild, ViewChild } from '@angular/core';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { ControlComponent } from '../../../shared/control/control.component';
 import { FormsModule } from '@angular/forms';
@@ -63,8 +63,22 @@ export class NewTicketComponent {
   //because Angular won't have initialized it yet
   //To be precise: No View will exist yet. The template exists but the component View
   //hasn't been initialized by Angular yet
-  @ViewChild('form') form?: ElementRef<HTMLFormElement>;
 
+  // @ViewChild('form') form?: ElementRef<HTMLFormElement>;
+
+  // If I had multiple customs buttons in that template, we use ViewChildren with the button 
+  // component like this to in the end store an array of buttons in this property here or an 
+  // array of ElementRefs that will resolve to my button component instances, to be precise.
+  // So ViewChildren is an important variation of ViewChild
+
+  //You could add a potential private form property here and instead call ViewChild as a function
+  //And viewchild will actually give you a signal as a value that in the end resolves to our HTML
+  //form element
+
+  private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+
+
+  
   onSubmit(title: string, ticketText: string, form: HTMLFormElement) {
     // console.log(titleElement);
     // console.dir(titleElement);
@@ -72,6 +86,6 @@ export class NewTicketComponent {
     // console.log('Entered title' + enteredTitle)
     console.log(title);
     console.log(ticketText);
-    this.form?.nativeElement.reset();
+    this.form()?.nativeElement.reset();
   }
 }
