@@ -1,4 +1,15 @@
-<!-- <p class="control"> -->
+
   <label>{{ label() }}</label>
+  <!-- I'm using ng-content to output any input or text area elements
+  that are wrapped by this ControlComponent -->
+  <!-- What if you wanted to get hold of those input or those text 
+  area elements inside of your ControlComponent class-->
+  <!-- You can't use viewChild for that because if you are using ng-content 
+  for projecting content into this template, the projected content is not 
+  actually part of the template and the viewChild and viewChildren only allows 
+  you to select content that is part of the template. Put in out words where 
+  the code in in that template not the placeholder for it as it's the case here
+  But angular gives you a way of getting hold of that projected content
+  -->
   <ng-content select="input, textarea" />
-<!-- </p> -->
+

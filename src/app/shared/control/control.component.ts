@@ -1,5 +1,7 @@
 import {
   Component,
+  contentChild,
+  ContentChild,
   ElementRef,
   HostBinding,
   HostListener,
@@ -29,63 +31,34 @@ import {
   templateUrl: './control.component.html',
   styleUrl: './control.component.css',
   encapsulation: ViewEncapsulation.None,
-  //You should instead use the host property
-  //Alternatively, you could add event binding here as well
-  //and then here define the method of the class that should
-  //be executed when thar event occurs
   host: {
     class: 'control',
     '(click)': 'onClick()',
   },
 })
 export class ControlComponent {
-  //HostBinding will do is it will take a look at this
-  //property name and it will then add it as a property
-  //to the host element and set this as a value for that
-  //property
-
-  // @HostBinding('class') className = 'control';
-  // There also is a HostListener decorator which you can import and use,
-  // which allows you to bind a method to an event to which you wanna listen here
-
-  //Alternatively, which allows you to bind a method to an event to which you wanna
-  //listen here
-  //You must pass an argument to HostListener, and specify the event that you should listen
-  // @HostListener('click') onClick() {
-  //   console.log('Clicked');
-  // }
-
-  // When we click on the host element, I wanna output some information about it,
-  // which obviously is not a real use case
-  // But here in this app I don't have a real use case because it is a feature
-  // you won't need that often
-
-  // So for this demo, let's say we wanna log some host element information
-  // whenever is clicked
-
-  // What you can do to achieve this, is you can inject a special value into your
-  // component, a value that will be provided by Angular
-  // And you can inject either with the constructor as your learned it for services
-  // or with help of that inject function about which you also learned
-
+ 
   label = input.required<string>();
-  // We have to pass the ElementRef class name, ElementRef is a class defined by Angular
-  // which defines a reference to some element
   private el = inject(ElementRef);
+
+  //In this app ControlComponent will then be an ElementRef
+  //I'm using ContentChild instead of ContentChildren here, 
+  //even though multiple elements have that input variable 
+  //because in each instance of my ControlComponent there 
+  //will only be input or text area
+  //I'm only passing one input or text area element per app 
+  //ControlComponent instance
+  //Control could be undefined if nothing's found
+  //@ContentChild('input') private control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
+  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
 
   onClick() {
     console.log('Clicked');
     console.log(this.el);
+    console.log(this.control());
   }
 
-  //There is one other last host element-related feature
-  // you should know about though
 
-  // You might need programmatic access to the host element
-  // So you might need to interact with it from your TS code
-
-  //But by injecting it into a component like this,
-  //Angular will give yu access to the host element
 
   
 }
