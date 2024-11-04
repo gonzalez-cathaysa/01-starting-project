@@ -1,4 +1,6 @@
 import {
+  afterNextRender,
+  afterRender,
   Component,
   contentChild,
   ContentChild,
@@ -9,20 +11,6 @@ import {
   input,
   ViewEncapsulation,
 } from '@angular/core';
-
-// go to our ControlComponent and there we can add another setting
-// to the component decorator, another configuration property, and this is the host property
-//Host wants an object as a value and that oject then takes any key value pairs of your choice
-// And that will add this class attribute to app-control wherever it's being used
-
-// When you work with a host element of an Angular component.
-// There are 2 other things you should know about
-// When it comes to adding properties to the host element
-// you can use this host setting on the component decorator object
-// and that is the preferred way of doing it
-// But alternative you can add a property to your component class
-// and name it className and set the value you wanna bind on your
-// host element
 
 @Component({
   selector: 'app-control',
@@ -37,28 +25,39 @@ import {
   },
 })
 export class ControlComponent {
- 
   label = input.required<string>();
   private el = inject(ElementRef);
 
-  //In this app ControlComponent will then be an ElementRef
-  //I'm using ContentChild instead of ContentChildren here, 
-  //even though multiple elements have that input variable 
-  //because in each instance of my ControlComponent there 
-  //will only be input or text area
-  //I'm only passing one input or text area element per app 
-  //ControlComponent instance
-  //Control could be undefined if nothing's found
-  //@ContentChild('input') private control?: ElementRef<HTMLInputElement | HTMLTextAreaElement>;
-  private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
+  private control =
+    contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
+
+//AfterRender and AfterNextRender
+//But you'll also notice that afterRender is executed again and again whenever anything
+//changes on that website
+//Not if something changes in this component, this control component, but anything 
+//anywhere on this website
+//Whereas, afterNextRender is not logged again
+//The idea behind these hooks here is that they allow you to define functions whenever 
+//changes anywhere in the entire application or after the next change anywhere in the 
+//entire Ang application
+//AfterRender will execute a lot because it listens to all future changes, whereas afterNextRender will
+//be triggered for the next change anywhere in the entire application
+
+
+//The other lifecycle hooks like ngOnInit ends on so on refer to the component to which they belong
+
+  constructor() {
+    afterRender(() => {
+      console.log('afterRender');
+    });
+    afterNextRender(() => {
+      console.log('afterNextRender');
+    });
+  }
 
   onClick() {
     console.log('Clicked');
     console.log(this.el);
     console.log(this.control());
   }
-
-
-
-  
 }
