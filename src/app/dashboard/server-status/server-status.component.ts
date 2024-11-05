@@ -1,4 +1,12 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { NavigationCancellationCode } from '@angular/router';
 import { interval } from 'rxjs';
 
@@ -9,49 +17,41 @@ import { interval } from 'rxjs';
   templateUrl: './server-status.component.html',
   styleUrl: './server-status.component.css',
 })
-export class ServerStatusComponent implements OnInit{
-  // currentStatus = 'online';
-  // Setting specific string values as types uses a TS feature
-  // called 'Literal types'. The idea is to only allow specific
-  // (string) values - instead of all strings
+export class ServerStatusComponent implements OnInit {
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('offline');
 
-  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
-
-  // To inject a special value into your components, a so called DestroyRef
-  // you can inject it with help of the constructor, the type is destroyRef
-  // and by injecting or storing it in a property, you can set up a listener 
-  // with help of that property and the injected value that will trigger a 
-  // function whenever the component into which you injected destroyRef
-  // is about to be destroyed
   private destroyRef = inject(DestroyRef);
+  constructor() {
+    //Angular will not set up a subscription
 
-
-
-  constructor() {}
+    //That means you can safely read Signal values in your TS code without setting up accidental subscription
+    //but the downside is that sometimes you might want to set up a subscription and you're not getting it then
+    //That's why Ang offers you a special function the effect function, which you can execute in your constructor
+    //for example
+    //Effect takes a function as an argument and if you then use a Signal in that function that's passed to effect,
+    //Angular will set up a subscription
+    //So by moving this code into this function that's passed to a effect, Angular does set up a subscription
+    //And it it'll automatically clean up that subscription it that component should ever get remove from the dom
+    effect(()=>{
+      console.log(this.currentStatus())
+    })
+    // console.log(this.currentStatus());
+  }
 
   ngOnInit() {
     const interval = setInterval(() => {
-      // We could now simply store our interval in a constant, which is only available in ngOnInit,
-      // because right after setting that interval we can use DestroyRef to call OnDestroy and register
-      // a function that will be executed
       const rnd = Math.random();
 
       if (rnd < 0.5) {
-        this.currentStatus = 'online';
+        this.currentStatus.set('online');
       } else if (rnd < 0.9) {
-        this.currentStatus = 'offline';
+        this.currentStatus.set('offline');
       } else {
-        this.currentStatus = 'unknown';
+        this.currentStatus.set('unknown');
       }
     }, 5000);
-    this.destroyRef.onDestroy(()=> {
-      clearInterval(interval)
+    this.destroyRef.onDestroy(() => {
+      clearInterval(interval);
     });
-    //Register a function that will be executed by angular when this component is 
-    //about to be destroyed. That interval constant is only available in ngOnInit,
-    //but that's also where I'm setting up this Destroy listener, and you can use 
-    //it as many OnDestroy listeners as you need in any methods of this component
-    
   }
-
 }
