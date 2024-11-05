@@ -19,20 +19,29 @@ import { elementAt } from 'rxjs';
   styleUrl: './new-ticket.component.css',
 })
 export class NewTicketComponent {
-  //@ViewChild('form') private form?: ElementRef<HTMLFormElement>;
-  private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+  @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
+  //private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
 
 
-  // ngAfterViewInit() {
-  //   console.log('after view init');
-  //   console.log(this.form?.nativeElement)
-  // }
+  ngAfterViewInit() {
+    console.log('after view init');
+    console.log(this.form?.nativeElement)
+  }
+
+
+  //We can use a ticket storage, but we can also manage in a property of the 
+  //tickets component and use a custom event an output to pass the submitted data
+  //from the new ticket component to the tickets component and then update the tickets
+  //data here in that component
+
+  //And update tickets.component.ts whenever new data is submitted
 
   onSubmit(title: string, ticketText: string, form: HTMLFormElement) {
     console.log(title);
     console.log(ticketText);
-    this.form()?.nativeElement.reset();
+    // this.form()?.nativeElement.reset();
+    this.form?.nativeElement.reset();
   }
 
 
